@@ -5,6 +5,7 @@ import {
   ScrollText, BarChart3, ChevronLeft, ChevronRight, Wallet,
   Sun, Moon, Menu, X, LogOut
 } from 'lucide-react';
+import { Analytics } from '@vercel/analytics/react';
 import { useStore } from './hooks/useStore';
 import { useTheme } from './hooks/useTheme';
 import Dashboard from './pages/Dashboard';
@@ -99,6 +100,7 @@ function SetupScreen({ onComplete }) {
           Stored locally in your browser
         </p>
       </motion.div>
+      <Analytics />
     </div>
   );
 }
@@ -338,6 +340,7 @@ export default function App() {
           </AnimatePresence>
         </div>
       </main>
+      <Analytics />
     </div>
   );
 }
