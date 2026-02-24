@@ -66,7 +66,7 @@ function SetupScreen({ onComplete }) {
           <Wallet className="text-white" size={28} />
         </motion.div>
 
-        <h1 className="text-2xl font-bold mb-1" style={{ color: 'var(--text-primary)' }}>InvestTracker</h1>
+        <h1 className="text-2xl font-bold mb-1" style={{ color: 'var(--text-primary)' }}>Sanctuary</h1>
         <p className="text-sm mb-8" style={{ color: 'var(--text-secondary)' }}>10% Fixed Monthly Return Tracker</p>
 
         <form onSubmit={handleSubmit} className="space-y-5">
@@ -152,7 +152,7 @@ function AuthScreen({ onVerify }) {
         </motion.div>
 
         <h1 className="text-2xl font-bold mb-1" style={{ color: 'var(--text-primary)' }}>Secure Access</h1>
-        <p className="text-sm mb-8" style={{ color: 'var(--text-secondary)' }}>Enter password to unlock InvestTracker</p>
+        <p className="text-sm mb-8" style={{ color: 'var(--text-secondary)' }}>Enter password to unlock Sanctuary</p>
 
         <form onSubmit={handleSubmit} className="space-y-5">
           <div className="text-left">
@@ -276,7 +276,7 @@ export default function App() {
           </div>
           {!sidebarCollapsed && (
             <div>
-              <div className="text-sm font-bold" style={{ color: 'var(--text-primary)' }}>InvestTracker</div>
+              <div className="text-sm font-bold" style={{ color: 'var(--text-primary)' }}>Sanctuary</div>
               <div className="text-[10px] font-medium" style={{ color: 'var(--text-tertiary)' }}>10% Fixed Return</div>
             </div>
           )}
@@ -418,7 +418,7 @@ export default function App() {
           <button onClick={() => setMobileMenuOpen(true)} className="btn btn-ghost p-2">
             <Menu size={22} style={{ color: 'var(--text-primary)' }} />
           </button>
-          <span className="text-sm font-bold" style={{ color: 'var(--text-primary)' }}>InvestTracker</span>
+          <span className="text-sm font-bold" style={{ color: 'var(--text-primary)' }}>Sanctuary</span>
           <button onClick={toggleTheme} className="btn btn-ghost p-2">
             {theme === 'dark' ? <Sun size={20} style={{ color: 'var(--text-secondary)' }} /> : <Moon size={20} style={{ color: 'var(--text-secondary)' }} />}
           </button>
