@@ -103,12 +103,112 @@ function SetupScreen({ onComplete }) {
   );
 }
 
+function AuthScreen({ onVerify }) {
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState(false);
+  const { theme, toggleTheme } = useTheme();
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const correctPassword = import.meta.env.VITE_APP_PASSWORD || 'admin123';
+    if (password === correctPassword) {
+      onVerify();
+    } else {
+      setError(true);
+      setPassword('');
+      setTimeout(() => setError(false), 2000);
+    }
+  };
+
+  return (
+    <div
+      className="min-h-screen flex items-center justify-center p-6"
+      style={{ background: 'var(--bg-primary)' }}
+    >
+      <button
+        onClick={toggleTheme}
+        className="fixed top-5 right-5 btn btn-ghost p-2.5 rounded-xl"
+        style={{ color: 'var(--text-secondary)' }}
+      >
+        {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
+      </button>
+
+      <motion.div
+        initial={{ opacity: 0, y: 24 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="card w-full max-w-sm text-center"
+        style={{ padding: '40px 36px' }}
+      >
+        <motion.div
+          initial={{ scale: 0.8 }}
+          animate={{ scale: 1 }}
+          className="w-16 h-16 rounded-2xl mx-auto mb-6 flex items-center justify-center"
+          style={{
+            background: 'linear-gradient(135deg, #3b82f6, #10b981)',
+            boxShadow: '0 8px 24px rgba(59, 130, 246, 0.3)',
+          }}
+        >
+          <Wallet className="text-white" size={28} />
+        </motion.div>
+
+        <h1 className="text-2xl font-bold mb-1" style={{ color: 'var(--text-primary)' }}>Secure Access</h1>
+        <p className="text-sm mb-8" style={{ color: 'var(--text-secondary)' }}>Enter password to unlock InvestTracker</p>
+
+        <form onSubmit={handleSubmit} className="space-y-5">
+          <div className="text-left">
+            <label>Password</label>
+            <input
+              type="password"
+              value={password}
+              onChange={e => setPassword(e.target.value)}
+              placeholder="••••••••"
+              required
+              autoFocus
+              className={error ? 'border-negative' : ''}
+              style={{
+                transition: 'all 0.2s ease',
+                borderColor: error ? 'var(--color-negative)' : 'var(--border-primary)'
+              }}
+            />
+          </div>
+          <button
+            type="submit"
+            className={`btn btn-primary w-full ${error ? 'bg-negative' : ''}`}
+            style={{ 
+              padding: '14px',
+              backgroundColor: error ? 'var(--color-negative)' : 'var(--color-active)'
+            }}
+          >
+            {error ? 'Wrong Password' : 'Unlock App'}
+          </button>
+        </form>
+
+        <p className="text-xs mt-6" style={{ color: 'var(--text-tertiary)' }}>
+          Private Portfolio Tracker
+        </p>
+      </motion.div>
+    </div>
+  );
+}
+
 export default function App() {
   const store = useStore();
   const { theme, toggleTheme } = useTheme();
+  const [isAuthenticated, setIsAuthenticated] = useState(() => {
+    return sessionStorage.getItem('invest-tracker-auth') === 'true';
+  });
   const [currentPage, setCurrentPage] = useState('dashboard');
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  const handleAuth = () => {
+    setIsAuthenticated(true);
+    sessionStorage.setItem('invest-tracker-auth', 'true');
+  };
+
+  if (!isAuthenticated) {
+    return <AuthScreen onVerify={handleAuth} />;
+  }
 
   if (!store.settings.setupComplete) {
     return <SetupScreen onComplete={store.initializePool} />;
