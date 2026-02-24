@@ -210,6 +210,21 @@ export default function App() {
     return <AuthScreen onVerify={handleAuth} />;
   }
 
+  if (store.isLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center p-6" style={{ background: 'var(--bg-primary)' }}>
+        <div className="text-center">
+          <motion.div
+            animate={{ rotate: 360 }}
+            transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
+            className="w-8 h-8 rounded-full border-2 border-primary border-t-transparent mx-auto mb-4"
+          />
+          <p className="text-sm font-medium" style={{ color: 'var(--text-secondary)' }}>Syncing with Sanctuary Cloud...</p>
+        </div>
+      </div>
+    );
+  }
+
   if (!store.settings.setupComplete) {
     return <SetupScreen onComplete={store.initializePool} />;
   }
